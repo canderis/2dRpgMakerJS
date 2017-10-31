@@ -86,7 +86,7 @@ class NewProjectView{
 
 	loadMainView(){
 		$('#main-menu-btns').show()
-		this.main.tilesetEditorView.selectWindow()
+		this.main.settingsView.selectWindow()
 	}
 }
 
@@ -112,33 +112,33 @@ class Settings{
 }
 
 class TilesetEditor{
-	constructor(){
-		//add button listeners
-		var me = this
-		$('#open-tileset').click( function(){
-			console.log('clicked')
-
-			me.button_openTileset_onClick()
-		})
-		$("#tileset-menu-btn").click( function(){
-			me.selectWindow()
-		})
-		// this.selectWindow()
-	}
-
-	selectWindow(){
-		console.log('tilesetSelectedWindow')
-
-		viewChange()
-
-		$('#tileset-menu-btn').addClass('active')
-		$('#current-menu-btns').load('html/tileset_menu.html')
-		$('#app-window').load('html/tileset.html')
-
-	}
-
-	button_openTileset_onClick(){
-		console.log('click')
-		console.log(dialog.showOpenDialog({properties: ['openFile', 'multiSelections']}))
-	}
+	// constructor(){
+	// 	//add button listeners
+	// 	var me = this
+	// 	$('#open-tileset').click( function(){
+	// 		console.log('clicked')
+	//
+	// 		me.button_openTileset_onClick()
+	// 	})
+	// 	$("#tileset-menu-btn").click( function(){
+	// 		me.selectWindow()
+	// 	})
+	// 	// this.selectWindow()
+	// }
+	//
+	// selectWindow(){
+	// 	console.log('tilesetSelectedWindow')
+	//
+	// 	viewChange()
+	//
+	// 	$('#tileset-menu-btn').addClass('active')
+	// 	$('#current-menu-btns').load('html/tileset_menu.html')
+	// 	$('#app-window').load('html/tileset.html')
+	//
+	// }
+	//
+	// button_openTileset_onClick(){
+	// 	console.log('click')
+	// 	console.log(dialog.showOpenDialog({properties: ['openFile', 'multiSelections']}))
+	// }
 }
