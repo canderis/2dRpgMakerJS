@@ -1,3 +1,8 @@
 #current-menu-btns{
     display: inline-block;
 }
+
+header{
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+}
