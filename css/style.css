@@ -2,6 +2,16 @@
     display: inline-block;
 }
 
+.add-settings-btn{
+    float: right;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    font-size: 15px;
+    padding: 0;
+}
+.add-settings-btn:focus {outline:0;}
+
+
 .logo{
     font-family: 'Oswald', sans-serif;
     font-size: 30px;

@@ -77,6 +77,11 @@ class NewProjectView{
 				console.log(err)
 			}
 		})
+		fs.mkdir(dir + '/assets/tilesets', function(err){
+			if(err){
+				console.log(err)
+			}
+		})
 		fs.writeFile(dir + '/settings.rpg', '', function(err){
 			if(err){
 				console.log(err)
@@ -98,6 +103,12 @@ class Settings{
 		$('#settings-menu-btn').click(function(){
 			console.log('click')
 			me.selectWindow()
+		})
+
+		$("#app-window").on('click', '#add-tileset', function(){
+			console.log('click')
+			console.log(dialog.showOpenDialog({properties: ['openFile', 'multiSelections']}))
+
 		})
 	}
 
