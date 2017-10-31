@@ -19,5 +19,6 @@
   "homepage": "https://github.com/canderis/2dRpgMakerJS#readme",
   "devDependencies": {
     "electron": "^1.7.9"
-  }
+  },
+  "dependencies": {}
 }
