@@ -4,9 +4,23 @@ let remote = electron.remote
 let dialog = remote.dialog
 
 $(document).ready(function(){
+	this.newProjectView = new NewProjectView()
 	this.settingsView = new Settings()
 	this.tilesetEditorView = new TilesetEditor()
 })
+
+function viewChange(){
+	$("#main-menu-btns > button.active").removeClass("active")
+	$('#current-menu-btns').html(``)
+}
+
+class NewProjectView{
+	constructor(){
+		$('#main-menu-btns').hide();
+		$('#app-window').load('html/new_project.html')
+
+	}
+}
 
 class Settings{
 	constructor(){
@@ -16,10 +30,9 @@ class Settings{
 
 	selectWindow(){
 		console.log('settingsSelectedWindow')
+		viewChange()
 
-		$("#main-menu-btns > button.active").removeClass("active")
 		$('#settings-menu-btn').addClass('active')
-		$('#current-menu-btns').html(``)
 		$('#app-window').load('html/settings.html')
 	}
 
@@ -30,12 +43,14 @@ class TilesetEditor{
 		//add button listeners
 		$('#open-tileset').click(this.button_openTileset_onClick)
 		$('#tileset-menu-btn').click(this.selectWindow)
-		this.selectWindow();
+		// this.selectWindow();
 	}
 
 	selectWindow(){
 		console.log('tilesetSelectedWindow')
-		$("#main-menu-btns > button.active").removeClass("active")
+
+		viewChange()
+
 		$('#tileset-menu-btn').addClass('active')
 		$('#current-menu-btns').load('html/tileset_menu.html')
 		$('#app-window').load('html/tileset.html')
