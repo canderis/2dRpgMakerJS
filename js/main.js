@@ -19,28 +19,53 @@ function viewChange(){
 
 class NewProjectView{
 	constructor(main){
-		this.main = main;
-		var me = this;
-		$('#main-menu-btns').hide();
+		this.main = main
+		var me = this
+		$('#main-menu-btns').hide()
 		$('#app-window').load('html/new_project.html')
 
 		$("#app-window").on('click', "#new-project-btn", function(){
-			me.newProject();
+			me.newProject()
 			me.loadMainView()
 		})
 
+		$("#app-window").on('click', "#open-project-btn", function(){
+			if(me.existingProject()){
+				me.loadMainView()
+			}
+		})
+
+	}
+	existingProject(){
+		var dir = dialog.showOpenDialog({
+			properties: ['openDirectory']
+		})
+
+		if(!dir || dir.length < 1){
+			return false
+		}
+		dir = dir[0]
+
+		console.log(dir)
+		if (path.existsSync(dir + '/settings.rpg')) {
+			return true
+		}
+
+		return false
+
+
 	}
 
+
 	newProject(){
-		console.log('open')
 		var dir = dialog.showOpenDialog({
 			properties: ['openDirectory', 'createDirectory']
 		})
 
 		if(!dir || dir.length < 1){
-			return false;
+			return false
 		}
-		dir = dir[0];
+		dir = dir[0]
 
 		console.log(dir)
 		if(false){//if dir is !empty{
@@ -49,29 +74,29 @@ class NewProjectView{
 
 		fs.mkdir(dir + '/assets', function(err){
 			if(err){
-				console.log(err);
+				console.log(err)
 			}
 		})
 		fs.writeFile(dir + '/settings.rpg', '', function(err){
 			if(err){
-				console.log(err);
+				console.log(err)
 			}
-		});
+		})
 	}
 
 	loadMainView(){
-		$('#main-menu-btns').show();
-		this.main.tilesetEditorView.selectWindow();
+		$('#main-menu-btns').show()
+		this.main.tilesetEditorView.selectWindow()
 	}
 }
 
 class Settings{
 	constructor(){
 		//add button listeners
-		var me = this;
+		var me = this
 		// $("#app-window").on('click','#settings-menu-btn', function(){
 		$('#settings-menu-btn').click(function(){
-			console.log('click');
+			console.log('click')
 			me.selectWindow()
 		})
 	}
@@ -89,16 +114,16 @@ class Settings{
 class TilesetEditor{
 	constructor(){
 		//add button listeners
-		var me = this;
+		var me = this
 		$('#open-tileset').click( function(){
 			console.log('clicked')
-			
+
 			me.button_openTileset_onClick()
 		})
 		$("#tileset-menu-btn").click( function(){
 			me.selectWindow()
 		})
-		// this.selectWindow();
+		// this.selectWindow()
 	}
 
 	selectWindow(){
