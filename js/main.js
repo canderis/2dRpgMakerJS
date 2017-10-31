@@ -9,6 +9,8 @@ $(document).ready(function(){
 	this.tilesetEditorView = new TilesetEditor()
 })
 
+
+
 function viewChange(){
 	$("#main-menu-btns > button.active").removeClass("active")
 	$('#current-menu-btns').html(``)
@@ -19,13 +21,24 @@ class NewProjectView{
 		$('#main-menu-btns').hide();
 		$('#app-window').load('html/new_project.html')
 
+		$("#app-window").on('click', "#new-project-btn", this.newProject)
+
+	}
+
+	newProject(){
+		console.log('open')
+		var dir = dialog.showOpenDialog({
+			properties: ['openDirectory', 'createDirectory']
+		})
+
+		console.log(dir)
 	}
 }
 
 class Settings{
 	constructor(){
 		//add button listeners
-		$('#settings-menu-btn').click(this.selectWindow)
+		$("#app-window").on('click','#settings-menu-btn', this.selectWindow)
 	}
 
 	selectWindow(){
@@ -41,8 +54,8 @@ class Settings{
 class TilesetEditor{
 	constructor(){
 		//add button listeners
-		$('#open-tileset').click(this.button_openTileset_onClick)
-		$('#tileset-menu-btn').click(this.selectWindow)
+		$("#app-window").on('click','#open-tileset', this.button_openTileset_onClick)
+		$("#app-window").on('click', '#tileset-menu-btn', this.selectWindow)
 		// this.selectWindow();
 	}
 
