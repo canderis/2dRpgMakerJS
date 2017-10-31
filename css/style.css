@@ -2,6 +2,14 @@
     display: inline-block;
 }
 
+ul{
+    margin: 0;
+    list-style: none;
+}
+
+.edit-icon{
+
+}
 .add-settings-btn{
     float: right;
     border: none;
@@ -10,6 +18,11 @@
     padding: 0;
 }
 .add-settings-btn:focus {outline:0;}
+
+.tilesetIcon{
+    max-width: 30px;
+    max-height: 100px;
+}
 
 
 .logo{

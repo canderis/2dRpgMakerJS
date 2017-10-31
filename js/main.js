@@ -5,9 +5,11 @@ let remote = electron.remote
 let dialog = remote.dialog
 
 $(document).ready(function(){
-	this.settingsView = new Settings()
-	this.tilesetEditorView = new TilesetEditor()
-	this.newProjectView = new NewProjectView(this)
+	window.program = {}
+	window.program.settingsView = new Settings(window.program)
+	//console.log(Number(process.version.match(/^v(\d+\.\d+)/)[1]))
+	//this.tilesetEditorView = new TilesetEditor(this)
+	window.program.newProjectView = new NewProjectView(window.program)
 })
 
 
@@ -48,6 +50,7 @@ class NewProjectView{
 
 		console.log(dir)
 		if (path.existsSync(dir + '/settings.rpg')) {
+			this.main.dir = dir
 			return true
 		}
 
@@ -87,6 +90,9 @@ class NewProjectView{
 				console.log(err)
 			}
 		})
+
+		this.main.dir = dir
+
 	}
 
 	loadMainView(){
@@ -96,7 +102,9 @@ class NewProjectView{
 }
 
 class Settings{
-	constructor(){
+	constructor(main){
+		this.main = main
+
 		//add button listeners
 		var me = this
 		// $("#app-window").on('click','#settings-menu-btn', function(){
@@ -107,7 +115,18 @@ class Settings{
 
 		$("#app-window").on('click', '#add-tileset', function(){
 			console.log('click')
-			console.log(dialog.showOpenDialog({properties: ['openFile', 'multiSelections']}))
+			var files = dialog.showOpenDialog({properties: ['openFile', 'multiSelections']})
+
+			if(!files || files.length < 1 ){
+				return false;
+			}
+
+			files.forEach(function(path){
+				//console.log(me.main.dir + '/assets/tilesets/' + path.replace(/^.*[\\\/]/, ''))
+				fs.createReadStream(path).pipe(fs.createWriteStream(me.main.dir + '/assets/tilesets/' + path.replace(/^.*[\\\/]/, '')));
+
+				//fs.copyFile(path, )
+			})
 
 		})
 	}
@@ -116,8 +135,30 @@ class Settings{
 		console.log('settingsSelectedWindow')
 		viewChange()
 
+		var me = this
 		$('#settings-menu-btn').addClass('active')
-		$('#app-window').load('html/settings.html')
+		$('#app-window').load('html/settings.html', function(){
+			fs.readdirSync(me.main.dir + '/assets/tilesets/').forEach(function(tileset){
+				tilesetHtml += '<li class="tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp;&nbsp;<span class="icon icon-pencil"></span></li>`
+			})
+			console.log(tilesetHtml)
+
+			console.log($('#tilesets'))
+
+			$('#tileset-list').html(tilesetHtml);
+			$('.tileset-btn').click(function(ev){
+				console.log(ev.target.id);
+				$('#tileset-image-viewer').html('<img src="'+ me.main.dir + '/assets/tilesets/'+ ev.target.id +'">')
+			})
+		})
+
+
+
+		var tilesetHtml = ``;
+
+
+
+
 	}
 
 }
