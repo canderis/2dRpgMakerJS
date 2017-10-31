@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>RPG Mapper JS!</title>
-    <link rel="stylesheet" href="css/photon.css">
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body><div class="window">
-    <header class="toolbar toolbar-header">
-        <h1 class="title">RPG Mapper JS</h1>
+<head>
+	<meta charset="UTF-8">
+	<title>RPG Mapper JS!</title>
+	<link rel="stylesheet" href="css/photon.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body><div class="window">
+	<header class="toolbar toolbar-header">
+		<h1 class="title">RPG Mapper JS</h1>
 
-        <div class="toolbar-actions">
-            <div class="btn-group">
-                <button class="btn btn-default">
-                    <span title="Map Editor" class="icon icon-home"></span>
-                </button>
-                <button id='tileset-menu-btn' class="btn btn-default">
-                    <span title="Tileset Editor" class="icon icon-globe"></span>
-                </button>
-            </div>
+		<div class="toolbar-actions">
+			<div id="main-menu-btns" class="btn-group">
+				<button class="btn btn-default">
+					<span title="Map Editor" class="icon icon-home"></span>
+				</button>
+				<button id='tileset-menu-btn' class="btn btn-default">
+					<span title="Tileset Editor" class="icon icon-globe"></span>
+				</button>
+				<button id='settings-menu-btn' class="btn btn-default">
+					<span title="Settings" class="icon icon-cog"></span>
+				</button>
+			</div>
 
-            <div id="current-menu-btns">
-            </div>
-        </div>
-    </header>
-    <div class="window-content">
-        <div class="pane-group">
-            <div class="pane-sm sidebar">...</div>
-            <div class="pane">...</div>
-        </div>
-    </div>
-    <footer class="toolbar toolbar-footer">
-        <h1 class="title">© 2017 Scott Huffman, All Rights Reserved</h1>
-    </footer>
+			<div id="current-menu-btns">
+			</div>
+		</div>
+	</header>
+	<div id="app-window" class="window-content">
+	</div>
+	<footer class="toolbar toolbar-footer">
+		<h1 class="title">© 2017 Scott Huffman, All Rights Reserved</h1>
+	</footer>
 
-    <script src='js/main.js'></script>
+	<script src='js/main.js'></script>
 </div>
 </body>
 </html>
