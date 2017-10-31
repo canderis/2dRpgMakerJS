@@ -1,0 +1,23 @@
+{
+  "name": "2dRpgMakerJS",
+  "version": "1.0.0",
+  "description": "A 2d RPG Map Maker With Electron",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canderis/2dRpgMakerJS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/canderis/2dRpgMakerJS/issues"
+  },
+  "homepage": "https://github.com/canderis/2dRpgMakerJS#readme",
+  "devDependencies": {
+    "electron": "^1.7.9"
+  }
+}
