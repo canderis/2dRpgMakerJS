@@ -1,5 +1,6 @@
 let $ = require('jquery')
 let electron = require('electron')
+let fs = require('fs')
 let remote = electron.remote
 let dialog = remote.dialog
 
@@ -31,7 +32,27 @@ class NewProjectView{
 			properties: ['openDirectory', 'createDirectory']
 		})
 
+		if(!dir || dir.length < 1){
+			return false;
+		}
+		dir = dir[0];
+
 		console.log(dir)
+		if(false){//if dir is !empty{
+
+		}
+
+		fs.mkdir(dir + '/assets', function(err){
+			if(err){
+				console.log(err);
+			}
+		})
+		fs.writeFile(dir + '/settings.rpg', '', function(err){
+			if(err){
+				console.log(err);
+			}
+		});
+
 	}
 }
 
