@@ -10,6 +10,8 @@ $(document).ready(function(){
 	//console.log(Number(process.version.match(/^v(\d+\.\d+)/)[1]))
 	//this.tilesetEditorView = new TilesetEditor(this)
 	window.program.newProjectView = new NewProjectView(window.program)
+	window.program.mapMaker = new MapMaker(window.program)
+
 })
 
 
@@ -152,15 +154,21 @@ class Settings{
 			})
 		})
 
-
-
 		var tilesetHtml = ``;
-
-
-
-
 	}
 
+}
+
+class MapMaker{
+	constructor(main){
+		this.main = main
+
+		$("#editor-menu-btn").click( function(){
+			viewChange()
+			$('#editor-menu-btn').addClass('active')
+			$('#app-window').load('html/editor.html')
+		})
+	}
 }
 
 class TilesetEditor{
