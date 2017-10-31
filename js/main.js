@@ -5,9 +5,9 @@ let remote = electron.remote
 let dialog = remote.dialog
 
 $(document).ready(function(){
-	this.newProjectView = new NewProjectView()
 	this.settingsView = new Settings()
 	this.tilesetEditorView = new TilesetEditor()
+	this.newProjectView = new NewProjectView(this)
 })
 
 
@@ -18,11 +18,16 @@ function viewChange(){
 }
 
 class NewProjectView{
-	constructor(){
+	constructor(main){
+		this.main = main;
+		var me = this;
 		$('#main-menu-btns').hide();
 		$('#app-window').load('html/new_project.html')
 
-		$("#app-window").on('click', "#new-project-btn", this.newProject)
+		$("#app-window").on('click', "#new-project-btn", function(){
+			me.newProject();
+			me.loadMainView()
+		})
 
 	}
 
@@ -52,14 +57,23 @@ class NewProjectView{
 				console.log(err);
 			}
 		});
+	}
 
+	loadMainView(){
+		$('#main-menu-btns').show();
+		this.main.tilesetEditorView.selectWindow();
 	}
 }
 
 class Settings{
 	constructor(){
 		//add button listeners
-		$("#app-window").on('click','#settings-menu-btn', this.selectWindow)
+		var me = this;
+		// $("#app-window").on('click','#settings-menu-btn', function(){
+		$('#settings-menu-btn').click(function(){
+			console.log('click');
+			me.selectWindow()
+		})
 	}
 
 	selectWindow(){
@@ -75,8 +89,15 @@ class Settings{
 class TilesetEditor{
 	constructor(){
 		//add button listeners
-		$("#app-window").on('click','#open-tileset', this.button_openTileset_onClick)
-		$("#app-window").on('click', '#tileset-menu-btn', this.selectWindow)
+		var me = this;
+		$('#open-tileset').click( function(){
+			console.log('clicked')
+			
+			me.button_openTileset_onClick()
+		})
+		$("#tileset-menu-btn").click( function(){
+			me.selectWindow()
+		})
 		// this.selectWindow();
 	}
 
