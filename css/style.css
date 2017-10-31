@@ -2,6 +2,11 @@
     display: inline-block;
 }
 
+.pane-sm{
+    width: 260px;
+    max-width: 260px;
+}
+
 header{
     -webkit-app-region: drag;
     -webkit-user-select: none;
