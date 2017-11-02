@@ -15,14 +15,15 @@ form{
 	display: block;
 	width:100%;
 	padding:2px 5px;
-	border-radius:3px;
+	border-radius:5px;
 	border:#CCC 1px solid;
+    height: 22px;
 }
 
 .edit-icon{
     transition: .2s;
     opacity: 0;
-    
+
 }
 
 .file-list:hover .edit-icon{

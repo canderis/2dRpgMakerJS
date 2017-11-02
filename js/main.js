@@ -188,13 +188,24 @@ class MapMaker{
 
 		$("#app-window").on('click', '#new-map-btn', function(){
 			console.log('click')
-			$('#new-map-form').show()
-			// fs.writeFile(me.main.dir + '/maps/settings.rpg', '', function(err){
-			// 	if(err){
-			// 		console.log(err)
-			// 	}
-			// })
+			//$('#new-map-form').show()
+			me.createNewMapFile()
 
+		})
+	}
+
+	createNewMapFile(i = 0){
+		console.log(i)
+		var me = this
+		fs.writeFile(me.main.dir + '/maps/map'+i+'.json', '', {flag:'wx'}, function(err){
+			if(err){
+				if(err.message.includes('EEXIST')){
+					me.createNewMapFile(i+1)
+				}
+				else{
+					console.log(err)
+				}
+			}
 		})
 	}
 }
