@@ -41,6 +41,7 @@ class NewProjectView{
 
 	}
 	existingProject(){
+		console.log('existing');
 		var dir = dialog.showOpenDialog({
 			properties: ['openDirectory']
 		})
@@ -51,7 +52,7 @@ class NewProjectView{
 		dir = dir[0]
 
 		console.log(dir)
-		if (path.existsSync(dir + '/settings.rpg')) {
+		if (fs.existsSync(dir + '/settings.rpg')) {
 			this.main.dir = dir
 			return true
 		}
@@ -149,7 +150,6 @@ class Settings{
 			fs.readdirSync(me.main.dir + '/assets/tilesets/').forEach(function(tileset){
 				tilesetHtml += '<li class="tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp;&nbsp;<span class="icon icon-pencil"></span></li>`
 			})
-			console.log(tilesetHtml)
 
 			console.log($('#tilesets'))
 
