@@ -137,6 +137,8 @@ class Settings{
 				//fs.copyFile(path, )
 			})
 
+			me.loadTilesets()
+
 		})
 	}
 
@@ -147,20 +149,27 @@ class Settings{
 		var me = this
 		$('#settings-menu-btn').addClass('active')
 		$('#app-window').load('html/settings.html', function(){
-			fs.readdirSync(me.main.dir + '/assets/tilesets/').forEach(function(tileset){
-				tilesetHtml += '<li class="tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp&nbsp<span class="icon icon-pencil"></span></li>`
-			})
-
-			console.log($('#tilesets'))
-
-			$('#tileset-list').html(tilesetHtml)
-			$('.tileset-btn').click(function(ev){
-				console.log(ev.target.id)
-				$('#tileset-image-viewer').html('<img src="'+ me.main.dir + '/assets/tilesets/'+ ev.target.id +'">')
-			})
+			me.loadTilesets()
 		})
 
+	}
+
+	loadTilesets(){
 		var tilesetHtml = ``
+		var me = this;
+
+		fs.readdirSync(me.main.dir + '/assets/tilesets/').forEach(function(tileset){
+			tilesetHtml += '<li class="tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp&nbsp<span class="icon icon-pencil"></span></li>`
+		})
+
+		console.log($('#tilesets'))
+
+		$('#tileset-list').html(tilesetHtml)
+
+		$('.tileset-btn').click(function(ev){
+			console.log(ev.target.id)
+			$('#tileset-image-viewer').html('<img src="'+ me.main.dir + '/assets/tilesets/'+ ev.target.id +'">')
+		})
 	}
 
 }
