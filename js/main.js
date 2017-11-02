@@ -179,11 +179,12 @@ class MapMaker{
 
 		$("#app-window").on('click', '#new-map-btn', function(){
 			console.log('click')
-			fs.writeFile(me.main.dir + '/maps/settings.rpg', '', function(err){
-				if(err){
-					console.log(err)
-				}
-			})
+			$('#new-map-form').show();
+			// fs.writeFile(me.main.dir + '/maps/settings.rpg', '', function(err){
+			// 	if(err){
+			// 		console.log(err)
+			// 	}
+			// })
 
 		})
 	}
