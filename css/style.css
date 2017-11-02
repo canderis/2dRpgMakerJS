@@ -20,6 +20,10 @@ form{
     height: 22px;
 }
 
+.map-viewer{
+    border:#CCC 1px solid;
+}
+
 .edit-icon{
     transition: .2s;
     opacity: 0;

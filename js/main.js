@@ -41,7 +41,7 @@ class NewProjectView{
 
 	}
 	existingProject(){
-		console.log('existing')
+		//console.log('existing')
 		var dir = dialog.showOpenDialog({
 			properties: ['openDirectory']
 		})
@@ -51,7 +51,7 @@ class NewProjectView{
 		}
 		dir = dir[0]
 
-		console.log(dir)
+		//console.log(dir)
 		if (fs.existsSync(dir + '/settings.rpg')) {
 			this.main.dir = dir
 			return true
@@ -73,7 +73,7 @@ class NewProjectView{
 		}
 		dir = dir[0]
 
-		console.log(dir)
+		//console.log(dir)
 		if(false){//if dir is !empty{
 
 		}
@@ -118,12 +118,12 @@ class Settings{
 		var me = this
 		// $("#app-window").on('click','#settings-menu-btn', function(){
 		$('#settings-menu-btn').click(function(){
-			console.log('click')
+			//console.log('click')
 			me.selectWindow()
 		})
 
 		$("#app-window").on('click', '#add-tileset', function(){
-			console.log('click')
+			//console.log('click')
 			var files = dialog.showOpenDialog({properties: ['openFile', 'multiSelections']})
 
 			if(!files || files.length < 1 ){
@@ -143,7 +143,7 @@ class Settings{
 	}
 
 	selectWindow(){
-		console.log('settingsSelectedWindow')
+		//console.log('settingsSelectedWindow')
 		viewChange()
 
 		var me = this
@@ -162,12 +162,12 @@ class Settings{
 			tilesetHtml += '<li class="file-list tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp&nbsp<span class="edit-icon icon icon-pencil"></span></li>`
 		})
 
-		console.log($('#tilesets'))
+		//console.log($('#tilesets'))
 
 		$('#tileset-list').html(tilesetHtml)
 
 		$('.tileset-btn').click(function(ev){
-			console.log(ev.target.id)
+			//console.log(ev.target.id)
 			$('#tileset-image-viewer').html('<img src="'+ me.main.dir + '/assets/tilesets/'+ ev.target.id +'">')
 		})
 	}
@@ -175,29 +175,40 @@ class Settings{
 }
 
 class MapMaker{
+
+
 	constructor(main){
 		var me = this
+		me.blankMap = {
+			x: 10,
+			y: 10,
+			events: [],
+			layers: [{}]
+		};
 		me.main = main
 
 		$("#editor-menu-btn").click( function(){
 			viewChange()
 			$('#editor-menu-btn').addClass('active')
 			$('#current-menu-btns').load('html/editor_menu.html')
-			$('#app-window').load('html/editor.html')
+			$('#app-window').load('html/editor.html', function(){
+				me.loadMaps()
+			})
+
 		})
 
 		$("#app-window").on('click', '#new-map-btn', function(){
-			console.log('click')
+			//console.log('click')
 			//$('#new-map-form').show()
 			me.createNewMapFile()
 
 		})
+
 	}
 
 	createNewMapFile(i = 0){
-		console.log(i)
 		var me = this
-		fs.writeFile(me.main.dir + '/maps/map'+i+'.json', '', {flag:'wx'}, function(err){
+		fs.writeFile(me.main.dir + '/maps/map'+i+'.json', JSON.stringify(me.blankMap), {flag:'wx'}, function(err){
 			if(err){
 				if(err.message.includes('EEXIST')){
 					me.createNewMapFile(i+1)
@@ -206,7 +217,42 @@ class MapMaker{
 					console.log(err)
 				}
 			}
+			else{
+				me.loadMaps()
+			}
 		})
+	}
+
+	loadMaps(){
+		var html = ``
+		var me = this
+
+		fs.readdirSync(me.main.dir + '/maps/').forEach(function(map){
+			console.log(typeof map)
+			if(map.includes('.json'))
+				html += '<li class="file-list map-btn" id ="'+map+'" >'+map.slice(0, -5)+`&nbsp&nbsp<span class="edit-icon icon icon-pencil"></span></li>`
+		})
+
+
+		$('#map-list').html(html)
+
+		$('.map-btn').click(function(ev){
+			me.loadMap(ev.target.id)
+			//$('#tileset-image-viewer').html('<img src="'+ me.main.dir + '/assets/tilesets/'+ ev.target.id +'">')
+		})
+	}
+
+	loadMap(filename){
+		var me = this
+		fs.readFile(me.main.dir + '/maps/' + filename, function(err, file){
+			if(err){
+				console.log(err)
+				return;
+			}
+			var currentMap = JSON.parse(file)
+			console.log(currentMap)
+
+		});
 	}
 }
 
