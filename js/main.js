@@ -41,7 +41,7 @@ class NewProjectView{
 
 	}
 	existingProject(){
-		console.log('existing');
+		console.log('existing')
 		var dir = dialog.showOpenDialog({
 			properties: ['openDirectory']
 		})
@@ -127,12 +127,12 @@ class Settings{
 			var files = dialog.showOpenDialog({properties: ['openFile', 'multiSelections']})
 
 			if(!files || files.length < 1 ){
-				return false;
+				return false
 			}
 
 			files.forEach(function(path){
 				//console.log(me.main.dir + '/assets/tilesets/' + path.replace(/^.*[\\\/]/, ''))
-				fs.createReadStream(path).pipe(fs.createWriteStream(me.main.dir + '/assets/tilesets/' + path.replace(/^.*[\\\/]/, '')));
+				fs.createReadStream(path).pipe(fs.createWriteStream(me.main.dir + '/assets/tilesets/' + path.replace(/^.*[\\\/]/, '')))
 
 				//fs.copyFile(path, )
 			})
@@ -148,19 +148,19 @@ class Settings{
 		$('#settings-menu-btn').addClass('active')
 		$('#app-window').load('html/settings.html', function(){
 			fs.readdirSync(me.main.dir + '/assets/tilesets/').forEach(function(tileset){
-				tilesetHtml += '<li class="tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp;&nbsp;<span class="icon icon-pencil"></span></li>`
+				tilesetHtml += '<li class="tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp&nbsp<span class="icon icon-pencil"></span></li>`
 			})
 
 			console.log($('#tilesets'))
 
-			$('#tileset-list').html(tilesetHtml);
+			$('#tileset-list').html(tilesetHtml)
 			$('.tileset-btn').click(function(ev){
-				console.log(ev.target.id);
+				console.log(ev.target.id)
 				$('#tileset-image-viewer').html('<img src="'+ me.main.dir + '/assets/tilesets/'+ ev.target.id +'">')
 			})
 		})
 
-		var tilesetHtml = ``;
+		var tilesetHtml = ``
 	}
 
 }
@@ -179,7 +179,7 @@ class MapMaker{
 
 		$("#app-window").on('click', '#new-map-btn', function(){
 			console.log('click')
-			$('#new-map-form').show();
+			$('#new-map-form').show()
 			// fs.writeFile(me.main.dir + '/maps/settings.rpg', '', function(err){
 			// 	if(err){
 			// 		console.log(err)
