@@ -77,6 +77,12 @@ class NewProjectView{
 
 		}
 
+		fs.mkdir(dir + '/maps', function(err){
+			if(err){
+				console.log(err)
+			}
+		})
+
 		fs.mkdir(dir + '/assets', function(err){
 			if(err){
 				console.log(err)
@@ -161,12 +167,24 @@ class Settings{
 
 class MapMaker{
 	constructor(main){
-		this.main = main
+		var me = this
+		me.main = main
 
 		$("#editor-menu-btn").click( function(){
 			viewChange()
 			$('#editor-menu-btn').addClass('active')
+			$('#current-menu-btns').load('html/editor_menu.html')
 			$('#app-window').load('html/editor.html')
+		})
+
+		$("#app-window").on('click', '#new-map-btn', function(){
+			console.log('click')
+			fs.writeFile(me.main.dir + '/maps/settings.rpg', '', function(err){
+				if(err){
+					console.log(err)
+				}
+			})
+
 		})
 	}
 }
