@@ -116,6 +116,7 @@ class Settings{
 
 		//add button listeners
 		var me = this
+
 		// $("#app-window").on('click','#settings-menu-btn', function(){
 		$('#settings-menu-btn').click(function(){
 			//console.log('click')
@@ -141,6 +142,8 @@ class Settings{
 
 		})
 	}
+
+
 
 	selectWindow(){
 		//console.log('settingsSelectedWindow')
@@ -183,7 +186,8 @@ class MapMaker{
 			x: 10,
 			y: 10,
 			events: [],
-			layers: [{}]
+			layers: [{}],
+			tileset: ''
 		};
 		me.main = main
 
@@ -228,7 +232,6 @@ class MapMaker{
 		var me = this
 
 		fs.readdirSync(me.main.dir + '/maps/').forEach(function(map){
-			console.log(typeof map)
 			if(map.includes('.json'))
 				html += '<li class="file-list map-btn" id ="'+map+'" >'+map.slice(0, -5)+`&nbsp&nbsp<span class="edit-icon icon icon-pencil"></span></li>`
 		})
@@ -250,9 +253,43 @@ class MapMaker{
 				return;
 			}
 			var currentMap = JSON.parse(file)
-			console.log(currentMap)
+			console.log(me.main.dir +'/assets/tilesets/'+currentMap.tileset)
+
+			$('#map-viewer').css({'max-width':currentMap.x * 32, height: currentMap.y * 32})
+			//$('#tileset').css('background-image', 'url("'+me.main.dir +'/assets/tilesets/'+currentMap.tileset+'")')
+			$('#tileset').html(`<svg id='tileset-grid' style='position: absolute;' width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+			    <defs>
+			      <pattern id="smallGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+			        <path d="M 32 0 L 0 0 0 32" fill="none" stroke="gray" stroke-width="0.8"/>
+			      </pattern>
+			      <pattern id="grid" width="128" height="128" patternUnits="userSpaceOnUse">
+			        <rect width="128" height="128" fill="url(#smallGrid)"/>
+			        <path d="M 128 0 L 0 0 0 128" fill="none" stroke="gray" stroke-width="1"/>
+			      </pattern>
+			    </defs>
+
+			    <rect width="100%" height="100%" fill="url(#grid)" />
+			  </svg><img id='tileset-image' style="padding-right: 20px;" src="`+me.main.dir +'/assets/tilesets/'+currentMap.tileset+'">').find( '#tileset-image' ).ready(
+		  function(){
+			  var height = $('#tileset-image').height()
+			  console.log($('#tileset-image').outerHeight())
+
+
+			  $('#tileset-grid').css('height',height)
+			  $('#tileset').click(function(e){
+				  console.log('here',e )
+				  me.calcTilesetLocation(e.offsetX, e.offsetY)
+			  })
+		  })
 
 		});
+
+		//
+	}
+	calcTilesetLocation(x, y){
+		var me = this
+		me.selectedTile = {x: Math.floor(x/32),y: Math.floor(y/32)};
+		console.log(me.selectedTile)
 	}
 }
 

@@ -22,6 +22,11 @@ form{
 
 .map-viewer{
     border:#CCC 1px solid;
+    overflow: hidden;
+    border-top: 0;
+border-left: 0;
+max-width: 0;
+height: 0;
 }
 
 .edit-icon{
@@ -77,6 +82,12 @@ form{
     max-width: 260px;
 }
 
+#tileset{
+    width: 272px;
+    max-width: 272px;
+    overflow-x: hidden;
+    /*background-repeat: no-repeat;*/
+}
 .center-project-buttons{
     margin: auto;
     width: 200px;
