@@ -159,7 +159,7 @@ class Settings{
 		var me = this;
 
 		fs.readdirSync(me.main.dir + '/assets/tilesets/').forEach(function(tileset){
-			tilesetHtml += '<li class="tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp&nbsp<span class="icon icon-pencil"></span></li>`
+			tilesetHtml += '<li class="file-list tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp&nbsp<span class="edit-icon icon icon-pencil"></span></li>`
 		})
 
 		console.log($('#tilesets'))

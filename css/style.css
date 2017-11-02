@@ -18,12 +18,33 @@ form{
 	border-radius:3px;
 	border:#CCC 1px solid;
 }
+
+.edit-icon{
+    transition: .2s;
+    opacity: 0;
+    
+}
+
+.file-list:hover .edit-icon{
+    opacity: 1;
+
+}
+
 .add-settings-btn{
     float: right;
     border: none;
     background-color: rgba(0,0,0,0);
     font-size: 15px;
     padding: 0;
+    line-height: 12px;
+
+    opacity: 0;
+    transition: .2s;
+    /*-webkit-transition: .5s;*/
+}
+
+.nav-group-title:hover .add-settings-btn{
+    opacity: 1;
 }
 .add-settings-btn:focus {outline:0;}
 
