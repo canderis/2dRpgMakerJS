@@ -21,6 +21,7 @@
     "electron": "^1.7.9"
   },
   "dependencies": {
+    "image-size": "^0.6.1",
     "jimp": "^0.2.28",
     "jquery": "^3.2.1"
   }

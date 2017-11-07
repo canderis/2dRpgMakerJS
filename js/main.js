@@ -3,6 +3,7 @@ let electron = require('electron')
 let fs = require('fs')
 let remote = electron.remote
 let dialog = remote.dialog
+var sizeOf = require('image-size');
 
 $(document).ready(function(){
 	window.program = {}
@@ -84,12 +85,12 @@ class NewProjectView{
 			}
 		})
 
-		fs.mkdir(dir + '/assets', function(err){
+		fs.mkdirSync(dir + '/assets', function(err){
 			if(err){
 				console.log(err)
 			}
 		})
-		fs.mkdir(dir + '/assets/tilesets', function(err){
+		fs.mkdirSync(dir + '/assets/tilesets', function(err){
 			if(err){
 				console.log(err)
 			}
@@ -132,10 +133,37 @@ class Settings{
 			}
 
 			files.forEach(function(path){
-				//console.log(me.main.dir + '/assets/tilesets/' + path.replace(/^.*[\\\/]/, ''))
-				fs.createReadStream(path).pipe(fs.createWriteStream(me.main.dir + '/assets/tilesets/' + path.replace(/^.*[\\\/]/, '')))
+				var filename = path.replace(/^.*[\\\/]/, '')
+				fs.createReadStream(path).pipe(fs.createWriteStream(me.main.dir + '/assets/tilesets/' + filename ))
 
-				//fs.copyFile(path, )
+
+				var dimensions = sizeOf(path);
+				console.log(dimensions);
+
+				var tilesetInfo = {
+					dimensions: dimensions,
+					collision: [],
+				}
+
+				for(var i = 0; i < dimensions.height / 32; i++ ){
+					if(!tilesetInfo.collision[i])
+						tilesetInfo.collision[i] = []
+
+					for(var j = 0; j < dimensions.width / 32; j++){
+						tilesetInfo.collision[i].push(1)
+					}
+				}
+				console.log(tilesetInfo)
+
+				fs.writeFile(me.main.dir + '/assets/tilesets/'+ filename +'.json', JSON.stringify(tilesetInfo), {flag:'wx'}, function(err){
+					if(err){
+						console.log(err)
+					}
+					else{
+						console.log('success')
+					}
+				})
+
 			})
 
 			me.loadTilesets()
@@ -162,7 +190,8 @@ class Settings{
 		var me = this;
 
 		fs.readdirSync(me.main.dir + '/assets/tilesets/').forEach(function(tileset){
-			tilesetHtml += '<li class="file-list tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp&nbsp<span class="edit-icon icon icon-pencil"></span></li>`
+			if(tileset.includes('.png'))
+				tilesetHtml += '<li class="file-list tileset-btn" id ="'+tileset+'" >'+tileset.slice(0, -4)+`&nbsp&nbsp<span class="edit-icon icon icon-pencil"></span></li>`
 		})
 
 		//console.log($('#tilesets'))
@@ -254,6 +283,10 @@ class MapMaker{
 			}
 			var currentMap = JSON.parse(file)
 			console.log(me.main.dir +'/assets/tilesets/'+currentMap.tileset)
+
+			$('#map-viewer').click(function(e){
+				console.log(Math.floor(e.offsetX / 32), Math.floor(e.offsetX / 32))
+			})
 
 			$('#map-viewer').css({'max-width':currentMap.x * 32, height: currentMap.y * 32})
 			//$('#tileset').css('background-image', 'url("'+me.main.dir +'/assets/tilesets/'+currentMap.tileset+'")')
